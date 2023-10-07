@@ -1,9 +1,9 @@
 package member;
 
 public class Customer {
-	private String name;
-	private int phone;
-	private String address;
+	private String name; //주문자 성함
+	private int phone; //주문자 연락처
+	private String address; //주문자 주소
 
 	public Customer() {
 
