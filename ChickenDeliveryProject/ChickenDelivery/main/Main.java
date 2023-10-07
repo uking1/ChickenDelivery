@@ -38,28 +38,63 @@ public class Main {
 			} else {
 				switch (num) {
 				case 1:
-					GuestInfo(name, phone); // 고객정보 출력
-				
+					// 1.고객정보 확인하기
+					GuestInfo(name, address, phone); // 고객정보 출력
+					break;
+				case 2:
+					// 2.장바구니 상품 목록 보기
+//					CartItemList();
+					break;
+				case 3:
+					// 3.장바구니 비우기
+//					CartClear();
+					break;
+				case 4:
+					// 4.장바구니에 항목 추가하기
+//					CartAddItem();
+					break;
+				case 5:
+					// 5. 장바구니의 항목 수량 줄이기
+//					CartRemoveItemCount();
+					break;
+				case 6:
+					// 6. 장바구니의 항목 삭제하기
+//					CartRemoveItem();
+					break;
+				case 7:
+					// 7. 영수증 표시하기
+//					CartBill();
+					break;
+				case 8:
+					// 8. 종료
+//					Exit();
+					break;
+				case 9:
+					// 9. 관리자 로그인
+//					AdminLogin();
+					break;
 				}
 			}
 
 		}
 	}
 
-	public static void GuestInfo(String name, int phone) {
+	public static void GuestInfo(String name, String address, int phone) {
 		System.out.println("현재 고객 정보");
-		System.out.println("이름 : " + user.getName() + ", 연락처 : " + user.getPhone());
+		System.out.printf("이름 :%s \n",user.getName());
+		System.out.printf("주소 :%s \n",user.getAddress());
+		System.out.printf("연락처 :%s \n",user.getPhone());
 
 	}
 
 	public static void menuIntroduction() {
 		System.out.println("************************************************");
-		System.out.println("\t\t\t" + "정욱이닭 메뉴");
+		System.out.println("\t\t" + "정욱이닭 메뉴");
 		System.out.println("************************************************");
-		System.out.println("1.고객정보 확인하기  \t 4.장바구니에 메뉴 추가하기");
+		System.out.println("1.고객정보 확인하기  \t\t 4.장바구니에 메뉴 추가하기");
 		System.out.println("2.장바구니 상품 목록 보기\t 5.장바구니의 메뉴 수량 줄이기");
-		System.out.println("3.장바구니 비우기   \t 6.장바구니의 항목 삭제하기");
-		System.out.println("7.영수증 표시하기   \t 8.종료");
+		System.out.println("3.장바구니 비우기   \t\t 6.장바구니의 항목 삭제하기");
+		System.out.println("7.영수증 표시하기   \t\t 8.종료");
 		System.out.println("9.관리자 로그인");
 		System.out.println("************************************************");
 
