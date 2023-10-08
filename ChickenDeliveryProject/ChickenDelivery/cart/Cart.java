@@ -3,6 +3,7 @@ package cart;
 import java.util.ArrayList;
 import menu.ChickenMenu;
 
+
 public class Cart implements CartInterface {
 
 	public ArrayList<CartItem> chickenItem = new ArrayList<CartItem>();
@@ -55,10 +56,11 @@ public class Cart implements CartInterface {
 		chickenItem.clear();
 		cartCount = 0;
 	}
+	
 	public void printCart() {
 		System.out.println("장바구니 상품 목록 :");
 		System.out.println("----------------------------------------");
-		System.out.println(" 	주문 ID \t|	수량 \t|	합계");
+		System.out.println("	주문 ID \t|  수량 \t|	합계");
 		
 		for (int i=0 ; i< chickenItem.size();i++) {
 			System.out.print("	" + chickenItem.get(i).getChickenID() + " \t| ");

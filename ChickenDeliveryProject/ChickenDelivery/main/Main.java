@@ -1,8 +1,13 @@
 package main;
 
 import java.util.Scanner;
+import java.util.*;
 
 import member.User;
+import cart.Cart;
+import member.Admin;
+import member.User;
+import menu.ChickenMenu;
 
 public class Main {
 	static final int NUM_CHICKEN = 5; // 치킨 정보 갯수
@@ -43,7 +48,7 @@ public class Main {
 					break;
 				case 2:
 					// 2.장바구니 상품 목록 보기
-//					CartItemList();
+					CartItemList();
 					break;
 				case 3:
 					// 3.장바구니 비우기
@@ -77,6 +82,14 @@ public class Main {
 			}
 
 		}
+	}
+
+	public static void CartItemList() {
+		if (Cart.cartCount >= 0) {
+			Cart cart = new Cart();
+			cart.printCart();
+		}
+		
 	}
 
 	public static void GuestInfo(String name, String address, int phone) {
