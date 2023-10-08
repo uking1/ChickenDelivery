@@ -52,7 +52,7 @@ public class Main {
 					break;
 				case 3:
 					// 3.장바구니 비우기
-//					CartClear();
+					CartClear();
 					break;
 				case 4:
 					// 4.장바구니에 항목 추가하기
@@ -82,6 +82,21 @@ public class Main {
 			}
 
 		}
+	}
+
+	public static void CartClear() {
+		Cart cart = new Cart();
+		if(Cart.cartCount == 0) {
+			System.out.println("장바구니에 상품이 없습니다. ");
+		}else {
+			System.out.println("장바구니에 모든 항목을 삭제하시겠습니까? ");
+			String ans = scan.nextLine();
+			if(ans.equals("Y")||ans.equals("y")) {
+				System.out.println("장바구니의 모든 항목을 삭제했습니다. ");
+				cart.deleteCart();
+			}
+		}
+		
 	}
 
 	public static void CartItemList() {
