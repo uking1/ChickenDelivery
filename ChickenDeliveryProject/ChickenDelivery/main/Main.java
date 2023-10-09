@@ -12,9 +12,9 @@ import cart.Cart;
 import member.User;
 import menu.ChickenMenu;
 import member.Admin;
+import exception.CartException;
 
 public class Main {
-    static final int NUM_CHICKEN = 5; // 치킨 정보 갯수
 
     static Cart cart = new Cart();
     static User user; // 사용자
@@ -33,9 +33,8 @@ public class Main {
         System.out.print("주문자 주소를 입력해주세요. ");
         String address = scan.nextLine();
         System.out.print("연락처를 입력해주세요. ");
-        int phone = scan.nextInt();
-        scan.nextLine(); // 개행 문자 처리
-
+        String phoneStr = scan.nextLine();
+        int phone = Integer.parseInt(phoneStr);
         // 사용자 정보 저장
         user = new User(name, phone, address);
 
@@ -43,11 +42,13 @@ public class Main {
 
         while (!flag) {
             menuIntroduction();
-
+            
+            try {
             System.out.println("메뉴 번호를 선택해주세요.");
-            int num = scan.nextInt();
-            if (1 > num || num > 9) {
-                System.out.println("1부터 9까지의 숫자를 입력해주세요");
+            String numStr = scan.nextLine(); // nextLine()을 사용하여 문자열로 입력 받음
+            int num = Integer.parseInt(numStr);
+            if (1 > num || num > 8) {
+                System.out.println("1부터 8까지의 숫자를 입력해주세요");
             } else {
                 switch (num) {
                     case 1:
@@ -87,6 +88,14 @@ public class Main {
                         break;
                 }
             }
+            }catch(CartException e) {
+            	System.out.println(e.getMessage());
+            	flag = true;
+            }catch(Exception e) {
+            	System.out.println(e);
+            	System.out.println("잘못된 메뉴 선택으로 종료합니다.");
+            	flag =true;
+            }
         }
     }
 
@@ -100,7 +109,7 @@ public class Main {
 
         Admin admin = new Admin(user.getName(), user.getPhone());
         if (adminId.equals(admin.getId()) && adminPw.equals(admin.getPassWord())) {
-            String[] writeMenu = new String[4];
+            String[] writeMenu = new String[5];
             System.out.println("신메뉴를 추가하겠습니까? Y | N");
             String input = scan.next();
 
@@ -110,17 +119,44 @@ public class Main {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyMMddhhmmss");
                 String strDate = formatter.format(date);
                 writeMenu[0] = "menu" + strDate;
-            }
-        }
-    }
+                System.out.println("메뉴 ID : " + writeMenu[0]);
+                String str1 = scan.nextLine();
+                System.out.print("메뉴명 : ");
+                writeMenu[1] = scan.nextLine();
+                System.out.print("가격 : ");
+                writeMenu[2] = scan.nextLine();
+                System.out.print("설명 : ");
+                writeMenu[3] = scan.nextLine();
+                System.out.print("출시일 : ");
+                writeMenu[4] = scan.nextLine();
+                try {
+					FileWriter fw = new FileWriter("menu.txt", true);
+
+					for (int i = 0; i < 5; i++) {
+						fw.write(writeMenu[i] + "\n");
+					}
+					fw.close();
+					System.out.println("새 메뉴 정보가 저장되었습니다.");
+				} catch (Exception e) {
+					System.out.println(e);
+				}
+
+			} else {
+				System.out.println("이름 : " + admin.getName() + ", 연락처 : " + admin.getPhone());
+				System.out.println("아이디 : " + admin.getId() + ", 비밀번호 : " + admin.getPassWord());
+			}
+		} else {
+			System.out.println("관리자 정보가 일치하지 않습니다.");
+		}
+	}
 
     public static void Exit() {
         System.out.println("종료 되었습니다.");
     }
 
-    public static void CartBill() {
+    public static void CartBill() throws CartException {
         if (cart.cartCount == 0) {
-            System.out.println("장바구니에 항목이 없습니다.");
+            throw new CartException("장바구니에 항목이 없습니다.");
         } else {
             System.out.println("배송받을 분은 고객정보와 같습니까? Y | N");
             Scanner input = new Scanner(System.in);
@@ -165,9 +201,9 @@ public class Main {
         System.out.println();
     }
 
-    public static void CartRemoveItem() {
+    public static void CartRemoveItem()throws CartException {
         if (cart.cartCount == 0) {
-            System.out.println("장바구니에 항목이 없습니다. ");
+            throw new CartException("장바구니에 항목이 없습니다. ");
         } else {
             CartItemList();
             boolean flag = false;
@@ -203,27 +239,28 @@ public class Main {
         cart.printCart();
         boolean flag = false;
 
-        while (!flag) { 
-            System.out.print("장바구니에 추가할 치킨의 메뉴를 입력하세요. :");
-            String str = scan.next(); 
+        while (!flag) {
+            System.out.println("장바구니에 추가할 치킨의 메뉴를 입력하세요. :");
+            String str = scan.nextLine();
 
-            boolean findFlag = false; // 일치여부
-            int numId = -1; // 인덱스번호
+            boolean findFlag = false;
+            int numId = -1;
 
             for (int i = 0; i < menu.size(); i++) {
-                if (str.equals(menu.get(i).getChickenMenu())) {
+                if (str.equals(menu.get(i).getMenuId())) {
                     numId = i;
                     findFlag = true;
                     break;
                 }
             }
+
             if (findFlag) {
                 System.out.println("장바구니에 추가하겠습니까? Y | N");
-                String inputStr = scan.next(); 
+                String inputStr = scan.nextLine();
                 if (inputStr.equalsIgnoreCase("Y")) {
-                    System.out.println(menu.get(numId).getChickenMenu() + "을(를) 장바구니에 추가했습니다.");
+                    System.out.println(menu.get(numId).getMenuId() + "을(를) 장바구니에 추가했습니다.");
                     // 장바구니에 넣기
-                    if (!isCartInChicken(menu.get(numId).getChickenMenu())) {
+                    if (!isCartInChicken(menu.get(numId).getMenuId())) {
                         cart.insertChicken(menu.get(numId));
                     }
                 }
@@ -234,9 +271,9 @@ public class Main {
         }
     }
 
-    public static void CartClear() {
+    public static void CartClear() throws CartException{
         if (cart.cartCount == 0) {
-            System.out.println("장바구니에 상품이 없습니다. ");
+            throw new CartException("장바구니에 항목이 없습니다.");
         } else {
             System.out.println("장바구니에 모든 항목을 삭제하시겠습니까? (Y | N)");
             String ans = scan.nextLine();
@@ -273,6 +310,11 @@ public class Main {
 
     public static void chickenList(ArrayList<ChickenMenu> menu) {
         setFileToChickenMenu(menu);
+        System.out.println("메뉴 목록 :");
+        for(ChickenMenu chickenMenu : menu) {
+        	System.out.println(chickenMenu.toString());
+        }
+        
     }
 
     public static int totalFileToChickenMenu() {
@@ -302,7 +344,7 @@ public class Main {
             BufferedReader br = new BufferedReader(fr);
 
             String chickenId;
-            String[] readChicken = new String[4];
+            String[] readChicken = new String[5];
             int count = 0;
 
             while ((chickenId = br.readLine()) != null) {
@@ -313,8 +355,7 @@ public class Main {
                     readChicken[3] = br.readLine();
                     readChicken[4] = br.readLine();
                 }
-                ChickenMenu menu = new ChickenMenu(readChicken[0], Integer.parseInt(readChicken[1]), readChicken[2],
-                        readChicken[3]);
+                ChickenMenu menu = new ChickenMenu(readChicken[0],readChicken[1], Integer.parseInt(readChicken[2]),readChicken[3],readChicken[4]);
                 menuList.add(menu);
             }
             br.close();

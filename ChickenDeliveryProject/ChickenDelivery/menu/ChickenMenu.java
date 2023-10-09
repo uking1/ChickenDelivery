@@ -1,6 +1,7 @@
 package menu;
 
 public class ChickenMenu {
+	private String menuId; // 메뉴 Id
 	private String ChickenMenu; // 치킨메뉴
 	private int price; // 치킨가격
 	private String description; // 설명
@@ -10,12 +11,19 @@ public class ChickenMenu {
 
 	}
 
-	public ChickenMenu(String chickenMenu, int price, String description, String releaseDate) {
+
+	public ChickenMenu(String menuId, String chickenMenu, int price, String description, String releaseDate) {
 		super();
+		this.menuId = menuId;
 		this.ChickenMenu = chickenMenu;
 		this.price = price;
 		this.description = description;
 		this.releaseDate = releaseDate;
+	}
+
+	
+	public String getMenuId() {
+		return menuId;
 	}
 
 	public String getChickenMenu() {
@@ -49,5 +57,14 @@ public class ChickenMenu {
 	public void setReleaseDate(String releaseDate) {
 		this.releaseDate = releaseDate;
 	}
+
+
+	@Override
+	public String toString() {
+		return "[" + menuId + " | " + ChickenMenu + " | " + price + " | "
+				+ description + " | " + releaseDate + "]";
+	}
+	
+	
 
 }

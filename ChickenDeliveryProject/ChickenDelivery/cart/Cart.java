@@ -17,7 +17,9 @@ public class Cart implements CartInterface {
 	public void printChickenList(ArrayList<ChickenMenu> chickenList) {
 		for (int i = 0; i < chickenList.size(); i++) {
 			ChickenMenu cm = chickenList.get(i);
+			System.out.print(cm.getMenuId() + " | ");
 			System.out.print(cm.getChickenMenu() + " | ");
+			System.out.print(cm.getPrice() + " | ");
 			System.out.print(cm.getDescription() + " | ");
 			System.out.print(cm.getReleaseDate() + " | ");
 			System.out.println();
@@ -60,13 +62,13 @@ public class Cart implements CartInterface {
 	public void printCart() {
 		System.out.println("장바구니 상품 목록 :");
 		System.out.println("----------------------------------------");
-		System.out.println("	주문 ID \t|  수량 \t|	합계");
+		System.out.println("	메뉴 \t|  수량 \t|	합계 \t|");
 		
 		for (int i=0 ; i< chickenItem.size();i++) {
-			System.out.print("	" + chickenItem.get(i).getChickenID() + " \t| ");
-			System.out.print("	" + chickenItem.get(i).getQuantity() + " \t| ");
-			System.out.print("	" + chickenItem.get(i).getTotalPrice() + " \t| ");
-			System.out.println("	");
+			System.out.print(" " + chickenItem.get(i).getChickenID() + " \t| ");
+			System.out.print(" " + chickenItem.get(i).getQuantity() + " \t| ");
+			System.out.print(" " + chickenItem.get(i).getTotalPrice() + " \t| ");
+			System.out.println("");
 		}
 		System.out.println("----------------------------------------");
 	}
