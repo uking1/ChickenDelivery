@@ -116,9 +116,9 @@ public class Main {
             if (input.equalsIgnoreCase("Y")) {
                 Date date = new Date();
 
-                SimpleDateFormat formatter = new SimpleDateFormat("yyMMddhhmmss");
+                SimpleDateFormat formatter = new SimpleDateFormat("yyMMdd");
                 String strDate = formatter.format(date);
-                writeMenu[0] = "menu" + strDate;
+                writeMenu[0] = "menu" + strDate; //신메뉴는 menu + 출시날짜 메뉴명으로 생성
                 System.out.println("메뉴 ID : " + writeMenu[0]);
                 String str1 = scan.nextLine();
                 System.out.print("메뉴명 : ");
@@ -192,13 +192,7 @@ public class Main {
         cart.printCart();
 
         // 장바구니에 담긴 항목의 총 금액 계산
-        int sum = 0;
-        for (int i = 0; i < cart.cartCount; i++) {
-            sum += cart.chickenItem.get(i).getTotalPrice();
-        }
-        System.out.println("\t\t\t주문 총금액 : " + sum + "원\n");
-        System.out.println("----------------------------------------------------------");
-        System.out.println();
+       totalPrice(); 
     }
 
     public static void CartRemoveItem()throws CartException {
@@ -234,14 +228,19 @@ public class Main {
     }
 
     public static void CartAddItem(ArrayList<ChickenMenu> menu) {
-        chickenList(menu);
+        chickenList(menu); 
 
         cart.printCart();
         boolean flag = false;
 
         while (!flag) {
-            System.out.println("장바구니에 추가할 치킨의 메뉴를 입력하세요. :");
+            System.out.println("장바구니에 추가할 치킨의 메뉴를 입력하세요.(1을 입력하면 종료):");
             String str = scan.nextLine();
+
+            if (str.equals("1")) {
+                flag = true; // 1을 입력하면 종료
+                continue;
+            }
 
             boolean findFlag = false;
             int numId = -1;
@@ -264,7 +263,6 @@ public class Main {
                         cart.insertChicken(menu.get(numId));
                     }
                 }
-                flag = true; // while종료
             } else {
                 System.out.println("다시 입력해 주세요. ");
             }
@@ -288,6 +286,7 @@ public class Main {
         if (cart.cartCount >= 0) {
             cart.printCart();
         }
+        totalPrice(); // 주문 총 금액 출력
     }
 
     public static void GuestInfo(String name, String address, int phone) {
@@ -299,10 +298,10 @@ public class Main {
 
     public static void menuIntroduction() {
         System.out.println("************************************************");
-        System.out.println("\t\t" + "정욱이닭 메뉴");
+        System.out.println("\t\t" + "정욱이닭 왕십리점 입니다.^^");
         System.out.println("************************************************");
         System.out.println("1.고객정보 확인하기  \t\t 4.장바구니에 메뉴 추가하기");
-        System.out.println("2.장바구니 상품 목록 보기\t 5.장바구니의 항목 삭제하기");
+        System.out.println("2.장바구니 상품 목록 보기\t\t 5.장바구니의 항목 삭제하기");
         System.out.println("3.장바구니 비우기   \t\t 6.영수증 표시하기");
         System.out.println("7.종료   \t\t\t 8.관리자 로그인");
         System.out.println("************************************************");
@@ -310,9 +309,10 @@ public class Main {
 
     public static void chickenList(ArrayList<ChickenMenu> menu) {
         setFileToChickenMenu(menu);
-        System.out.println("메뉴 목록 :");
-        for(ChickenMenu chickenMenu : menu) {
-        	System.out.println(chickenMenu.toString());
+        
+        System.out.println("메뉴 목록 :"); // 메뉴 목록 출력
+        for(ChickenMenu data : menu) {
+        	System.out.println(data.toString());
         }
         
     }
@@ -367,5 +367,16 @@ public class Main {
 
     public static boolean isCartInChicken(String chickenId) {
         return cart.isCartInChicken(chickenId);
+    }
+    
+    
+    public static void totalPrice() {
+    	int sum = 0;
+        for (int i = 0; i < cart.cartCount; i++) {
+            sum += cart.chickenItem.get(i).getTotalPrice();
+        }
+        System.out.println("\t\t\t주문 총금액 : " + sum + "원\n");
+        System.out.println("----------------------------------------------------------");
+        System.out.println();
     }
 }

@@ -62,7 +62,7 @@ public class Cart implements CartInterface {
 	public void printCart() {
 		System.out.println("장바구니 상품 목록 :");
 		System.out.println("----------------------------------------");
-		System.out.println("	메뉴 \t|  수량 \t|	합계 \t|");
+		System.out.println("	메뉴 \t|  수량 \t|	금액 \t|");
 		
 		for (int i=0 ; i< chickenItem.size();i++) {
 			System.out.print(" " + chickenItem.get(i).getChickenID() + " \t| ");
