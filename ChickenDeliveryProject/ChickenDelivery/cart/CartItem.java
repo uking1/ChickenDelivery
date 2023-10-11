@@ -23,7 +23,7 @@ public class CartItem {
 	
 	
 
-	public void updateTotalPrice() {
+	public void updateTotalPrice() {    // 합계
 		totalPrice = this.menu.getPrice() * this.quantity;
 		
 	}

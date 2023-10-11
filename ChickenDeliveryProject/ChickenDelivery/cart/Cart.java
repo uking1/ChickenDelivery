@@ -14,20 +14,20 @@ public class Cart implements CartInterface {
 	}
 
 	@Override
-	public void printChickenList(ArrayList<ChickenMenu> chickenList) {
+	public void printChickenList(ArrayList<ChickenMenu> chickenList) { // 메뉴 출력
 		for (int i = 0; i < chickenList.size(); i++) {
 			ChickenMenu cm = chickenList.get(i);
-			System.out.print(cm.getMenuId() + " | ");
-			System.out.print(cm.getChickenMenu() + " | ");
-			System.out.print(cm.getPrice() + " | ");
-			System.out.print(cm.getDescription() + " | ");
-			System.out.print(cm.getReleaseDate() + " | ");
+			System.out.print(cm.getMenuId() + " | "); // menu 번호
+			System.out.print(cm.getChickenMenu() + " | "); // 메뉴 이름
+			System.out.print(cm.getPrice() + " | "); // 가격 
+			System.out.print(cm.getDescription() + " | "); // 메뉴 설명
+			System.out.print(cm.getReleaseDate() + " | "); // 메뉴 출시일
 			System.out.println();
 		}
 	}
 
 	@Override
-	public boolean isCartInChicken(String chickenId) {
+	public boolean isCartInChicken(String chickenId) { // 장바구니 항목 있는지 확인
 		boolean flag = false;
 		for(int i=0; i<chickenItem.size(); i++) {
 			if(chickenId.equals(chickenItem.get(i).getChickenID())) {
@@ -39,14 +39,14 @@ public class Cart implements CartInterface {
 	}
 
 	@Override
-	public void removeCart(int numId) {
+	public void removeCart(int numId) { // 장바구니 항목 삭제
 		chickenItem.remove(numId);
 		cartCount = chickenItem.size();
 
 	}
 
 	@Override
-	public void insertChicken(ChickenMenu c) {
+	public void insertChicken(ChickenMenu c) { // 장바구니 항목 추가
 		CartItem ChickenMenu = new CartItem(c);
 		chickenItem.add(ChickenMenu);
 		cartCount = chickenItem.size();
@@ -54,7 +54,7 @@ public class Cart implements CartInterface {
 	}
 
 	@Override
-	public void deleteCart() {
+	public void deleteCart() { // 장바구니 비우기
 		chickenItem.clear();
 		cartCount = 0;
 	}
