@@ -114,13 +114,10 @@ public class Main {
             String input = scan.next();
 
             if (input.equalsIgnoreCase("Y")) {
-                Date date = new Date();
 
-                SimpleDateFormat formatter = new SimpleDateFormat("yyMMdd");
-                String strDate = formatter.format(date);
-                writeMenu[0] = "menu" + strDate; //신메뉴는 menu + 출시날짜 메뉴명으로 생성
-                System.out.println("메뉴 ID : " + writeMenu[0]);
-                String str1 = scan.nextLine();
+                System.out.print("메뉴 ID : ");
+                writeMenu[0] = scan.nextLine();
+                scan.nextLine();
                 System.out.print("메뉴명 : ");
                 writeMenu[1] = scan.nextLine();
                 System.out.print("가격 : ");
