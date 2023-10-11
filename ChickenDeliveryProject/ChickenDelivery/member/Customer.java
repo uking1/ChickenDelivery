@@ -8,7 +8,7 @@ public class Customer {
 	public Customer() {
 
 	}
-
+	
 	public Customer(String name, int phone) {
 		this.name = name;
 		this.phone = phone;

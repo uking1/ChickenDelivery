@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import cart.Cart;
-import member.User;
+import member.Customer;
 import menu.ChickenMenu;
 import member.Admin;
 import exception.CartException;
@@ -17,7 +17,7 @@ import exception.CartException;
 public class Main {
 
 	static Cart cart = new Cart();
-	static User user; // 사용자
+	static Customer user; // 사용자
 
 	public static Scanner scan = new Scanner(System.in);
 
@@ -30,31 +30,32 @@ public class Main {
 
 		System.out.print("주문자 성함을 입력해주세요. ");
 		String name = scan.nextLine();
-		System.out.print("주문자 주소를 입력해주세요. ");
-		String address = scan.nextLine();
 		System.out.print("연락처를 입력해주세요. ");
 		String phoneStr = scan.nextLine(); // nextLine()을 사용하여 문자열로 입력 받음
 		int phone = Integer.parseInt(phoneStr);
 
 		// 사용자 정보 저장
-		user = new User(name, phone, address);
+		user = new Customer(name, phone);
 
 		boolean flag = false; // 무한반복
-
+		
 		while (!flag) {
+			
 			menuIntroduction();
 
 			try {
+				
 				System.out.println("메뉴 번호를 선택해주세요.");
-				String numStr = scan.nextLine(); // nextLine()을 사용하여 문자열로 입력 받음
-				int num = Integer.parseInt(numStr);
+				
+	            int num = Integer.parseInt(scan.nextLine()); 
+				
 				if (1 > num || num > 8) {
 					System.out.println("1부터 8까지의 숫자를 입력해주세요");
 				} else {
 					switch (num) {
 					case 1:
 						// 1.고객정보 확인하기
-						GuestInfo(name, address, phone); // 고객정보 출력
+						GuestInfo(name, phone); // 고객정보 출력
 						break;
 					case 2:
 						// 2.장바구니 상품 목록 보기
@@ -89,11 +90,7 @@ public class Main {
 						break;
 					}
 				}
-			} catch (CartException e) {
-				System.out.println(e.getMessage());
-				flag = true;
 			} catch (Exception e) {
-				System.out.println(e);
 				System.out.println("잘못된 메뉴 선택으로 종료합니다.");
 				flag = true;
 			}
@@ -148,6 +145,7 @@ public class Main {
 		} else {
 			System.out.println("관리자 정보가 일치하지 않습니다.");
 		}
+		scan.nextLine();// 버퍼제거
 	}
 
 	public static void Exit() { // 종료
@@ -289,10 +287,9 @@ public class Main {
 		totalPrice(); // 주문 총 금액 출력
 	}
 
-	public static void GuestInfo(String name, String address, int phone) { // 입력한 손님 정보 보기
+	public static void GuestInfo(String name, int phone) { // 입력한 손님 정보 보기
 		System.out.println("현재 고객 정보");
 		System.out.printf("이름 :%s \n", user.getName());
-		System.out.printf("주소 :%s \n", user.getAddress());
 		System.out.printf("연락처 :%d \n", user.getPhone());
 	}
 
